@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <cuda_runtime.h>
 
-#define N 3
+#define N 4
 
 __global__ void matrix_mul(int *a, int *b, int *c, int n) {
     int i = blockIdx.x * blockDim.x + threadIdx.x;
