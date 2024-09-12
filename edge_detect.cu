@@ -34,26 +34,21 @@ __global__ void sobelFilterKernel(unsigned char *inputImage, unsigned char *outp
         return;
     }
 
-    float Gx = 0.0f, Gy = 0.0f;
+    float dx = 0.0f, dy = 0.0f;
 
     // Apply the Sobel filter
-    for (int i = -1; i <= 1; i++) {
-        for (int j = -1; j <= 1; j++) {
-            int imgX = min(max(x + i, 0), width - 1);  // Ensure indices are within bounds
-            int imgY = min(max(y + j, 0), height - 1); // Ensure indices are within bounds
+    if( x > 0 && y > 0 && x < width-1 && y < height-1) {
+        dx = (-1* inputImage[(y-1)*width + (x-1)]) + (-2*inputImage[y*width+(x-1)]) + (-1*inputImage[(y+1)*width+(x-1)]) +
+             (    inputImage[(y-1)*width + (x+1)]) + ( 2*inputImage[y*width+(x+1)]) + (   inputImage[(y+1)*width+(x+1)]);
+        dy = (    inputImage[(y-1)*width + (x-1)]) + ( 2*inputImage[(y-1)*width+x]) + (   inputImage[(y-1)*width+(x+1)]) +
+             (-1* inputImage[(y+1)*width + (x-1)]) + (-2*inputImage[(y+1)*width+x]) + (-1*inputImage[(y+1)*width+(x+1)]);
 
-            unsigned char pixelValue = inputImage[imgY * width + imgX];
+        // Compute the gradient magnitude
+        float edgeVal = sqrtf(dx * dx + dy * dy);
 
-            Gx += pixelValue * SobelX[i + 1][j + 1];
-            Gy += pixelValue * SobelY[i + 1][j + 1];
-        }
+        // Normalize and set the output pixel
+        outputImage[y * width + x] = (unsigned char)min(max(edgeVal, 0.0f), 255.0f);
     }
-
-    // Compute the gradient magnitude
-    float edgeVal = sqrtf(Gx * Gx + Gy * Gy);
-
-    // Normalize and set the output pixel
-    outputImage[y * width + x] = (unsigned char)min(max(edgeVal, 0.0f), 255.0f);
 }
 
 int main() {
