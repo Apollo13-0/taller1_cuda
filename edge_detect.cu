@@ -3,11 +3,11 @@
 #include <math.h>
 #include "stb_image.h"   // For loading images
 #include "stb_image_write.h" // For saving images
-#include <opencv2/opencv.hpp> // For displaying images
+//#include <opencv2/opencv.hpp> // For displaying images
 
 #define SOBEL_FILTER_WIDTH 3
 
-using namespace cv;
+//using namespace cv;
 
 // Define the Sobel kernel for x and y directions
 __constant__ int SobelX[SOBEL_FILTER_WIDTH][SOBEL_FILTER_WIDTH] = {
@@ -94,9 +94,9 @@ int main() {
     cudaMemcpy(h_outputImage, d_outputImage, width * height * sizeof(unsigned char), cudaMemcpyDeviceToHost);
 
     // Create an OpenCV Mat for the output and display it
-    Mat outputImage(height, width, CV_8UC1, h_outputImage);
-    imshow("Sobel Edge Detection", outputImage); // Show the Sobel edge-detected image
-    waitKey(0); // Wait for a key press
+    //Mat outputImage(height, width, CV_8UC1, h_outputImage);
+    //imshow("Sobel Edge Detection", outputImage); // Show the Sobel edge-detected image
+    //waitKey(0); // Wait for a key press
 
     // Save the Sobel result to a file (optional)
     stbi_write_png("sobel_output.png", width, height, 1, h_outputImage, width);
