@@ -51,11 +51,18 @@ __global__ void sobelFilterKernel(unsigned char *inputImage, unsigned char *outp
     }
 }
 
-int main() {
+int main(int argc, char* argv[]) {
     int width, height, channels;
+
+    if (argc < 2) {
+        std::cerr << "Error: Please provide the image filename as a parameter!" << std::endl;
+        return -1;
+    }
+
+    const char* imageName = argv[1];
     
     // Load the image using stb_image
-    unsigned char* h_inputImage = stbi_load("img/image1.png", &width, &height, &channels, 1); // Load as grayscale
+    unsigned char* h_inputImage = stbi_load(imageName, &width, &height, &channels, 1); // Load as grayscale
     if (!h_inputImage) {
         printf("Error: Could not load the image!");
         return -1;
