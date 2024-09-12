@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
     int width, height, channels;
 
     if (argc < 2) {
-        std::cerr << "Error: Please provide the image filename as a parameter!" << std::endl;
+        printf("Error: Please provide the image filename as a parameter!");
         return -1;
     }
 
@@ -75,6 +75,8 @@ int main(int argc, char* argv[]) {
     //imshow("Original Image", inputImage);  // Show the original image
     //waitKey(0); // Wait for a key press
 
+    clock_t start = clock();
+
     // Allocate host memory for the output image
     unsigned char* h_outputImage = (unsigned char*)malloc(width * height * sizeof(unsigned char));
 
@@ -93,6 +95,12 @@ int main(int argc, char* argv[]) {
 
     // Launch the Sobel kernel (make sure the Sobel kernel is defined earlier)
     sobelFilterKernel<<<gridDim, blockDim>>>(d_inputImage, d_outputImage, width, height);
+
+    clock_t end = clock();
+
+    double time = (double)(end-start)/CLOCKS_PER_SEC;
+
+    printf("GPU time = %fs", time);
 
     // Copy the result back to host
     cudaMemcpy(h_outputImage, d_outputImage, width * height * sizeof(unsigned char), cudaMemcpyDeviceToHost);
