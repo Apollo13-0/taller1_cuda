@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <cuda_runtime.h>
 #include <math.h>
-#include "stb_image.h"   // For loading images
-#include "stb_image_write.h" // For saving images
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
 //#include <opencv2/opencv.hpp> // For displaying images
 
 #define SOBEL_FILTER_WIDTH 3
@@ -60,16 +62,16 @@ int main() {
     // Load the image using stb_image
     unsigned char* h_inputImage = stbi_load("img/image1.png", &width, &height, &channels, 1); // Load as grayscale
     if (!h_inputImage) {
-        std::cerr << "Error: Could not load the image!" << std::endl;
+        printf("Error: Could not load the image!");
         return -1;
     }
 
-    std::cout << "Image loaded: " << width << "x" << height << ", channels: " << channels << std::endl;
+    printf("Image loaded: %ix%i, channels: %x", width, height, channels);
 
     // Display the image using OpenCV
-    Mat inputImage(height, width, CV_8UC1, h_inputImage); // Create an OpenCV Mat from the image data
-    imshow("Original Image", inputImage);  // Show the original image
-    waitKey(0); // Wait for a key press
+    //Mat inputImage(height, width, CV_8UC1, h_inputImage); // Create an OpenCV Mat from the image data
+    //imshow("Original Image", inputImage);  // Show the original image
+    //waitKey(0); // Wait for a key press
 
     // Allocate host memory for the output image
     unsigned char* h_outputImage = (unsigned char*)malloc(width * height * sizeof(unsigned char));
