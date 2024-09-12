@@ -40,15 +40,19 @@ int main() {
 
     dim3 blockSize(N, N);
     dim3 gridSize((n + N - 1) / N, (n + N - 1) / N);
-    matrix_mul<<<gridSize, blockSize>>>(d_a, d_b, d_c, n);
 
+    clock_t start_d=clock();
+    matrix_mul<<<gridSize, blockSize>>>(d_a, d_b, d_c, n);
+    clock_t end_d = clock();
     cudaMemcpy(c, d_c, size, cudaMemcpyDeviceToHost);
 
+    double time_d = (double)(end_d-start_d)/CLOCKS_PER_SEC;
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++)
             printf("%d ", c[i * n + j]);
         printf("\n");
     }
+    printf("N = %d \t GPU time = %f \t", N, time_d);
 
     cudaFree(d_a);
     cudaFree(d_b);
