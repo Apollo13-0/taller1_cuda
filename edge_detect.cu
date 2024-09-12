@@ -58,7 +58,7 @@ int main() {
     int width, height, channels;
     
     // Load the image using stb_image
-    unsigned char* h_inputImage = stbi_load("logo.png", &width, &height, &channels, 1); // Load as grayscale
+    unsigned char* h_inputImage = stbi_load("img/image1.png", &width, &height, &channels, 1); // Load as grayscale
     if (!h_inputImage) {
         std::cerr << "Error: Could not load the image!" << std::endl;
         return -1;
