@@ -4,3 +4,7 @@
 *.ptx
 *.cubin
 *.fatbin
+edge_detect
+multiplicacionMat
+sobel_output.png
+
