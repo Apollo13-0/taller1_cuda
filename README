@@ -1,0 +1,75 @@
+# CUDA and Python Matrix Operations
+
+This project contains several CUDA and Python scripts for performing matrix operations and edge detection.
+
+## Files
+
+- `multiplicacionMat.cu`: CUDA program for multiplying two 4x4 matrices.
+- `vecadd.cu`: CUDA program for vector addition.
+- `filtro.py`: Python script for applying a filter to an image.
+- `edge_detect.cu`: CUDA program for edge detection in images.
+
+## Requirements
+
+- CUDA Toolkit
+- Python 3.x
+- NumPy (for `filtro.py`)
+- OpenCV (for `filtro.py`)
+
+## Compilation and Execution
+
+### `multiplicacionMat.cu`
+
+1. Compile the CUDA program:
+    ```sh
+    nvcc multiplicacionMat.cu -o multiplicacionMat
+    ```
+
+2. Run the executable:
+    ```sh
+    ./multiplicacionMat
+    ```
+
+### `vecadd.cu`
+
+1. Compile the CUDA program:
+    ```sh
+    nvcc vecadd.cu -o vecadd
+    ```
+
+2. Run the executable:
+    ```sh
+    ./vecadd
+    ```
+
+### `filtro.py`
+
+1. Ensure you have the required Python packages:
+    ```sh
+    pip install numpy opencv-python
+    ```
+
+2. Run the Python script:
+    ```sh
+    python filtro.py
+    ```
+
+### `edge_detect.cu`
+
+1. Compile the CUDA program:
+    ```sh
+    nvcc edge_detect.cu -o edge_detect
+    ```
+
+2. Run the executable:
+    ```sh
+    ./edge_detect
+    ```
+
+## Author
+
+- Your Name
+
+## License
+
+This project is licensed under the MIT License.
